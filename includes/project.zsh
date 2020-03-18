@@ -31,7 +31,7 @@ function project:delete()
   read -q "CONFIRM?> Confirm [ y/n ]: "
 
   if [[ $CONFIRM = "y" ]]; then;
-    echo && remove_directory $PROJECT_PATH
+    echo && dir:delete $PROJECT_PATH --force
   fi
 
   # Drop database associated with the project.

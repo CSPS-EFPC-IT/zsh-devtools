@@ -25,7 +25,7 @@ The scripts require these technologies to be installed on your local development
 
 ## Usage
 
-Here is a list of some available commands. To see the full list, you should have a look at all the functions located under the **includes/** folder. Everything should be well documentated.
+Here is a list of some available commands. To see the full list, you should have a look at all the functions located under the **includes/** folder. Everything should be well documented.
 
 ### Database
 - mysql:create_login

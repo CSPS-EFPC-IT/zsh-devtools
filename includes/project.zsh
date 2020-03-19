@@ -1,6 +1,31 @@
 #!/bin/zsh
 
 # |----------------------------------------------------------------------------
+# | Open a project in vscode.
+# |----------------------------------------------------------------------------
+# | @param [PROJECT_NAME] Name of the project to open. (optional)
+# |----------------------------------------------------------------------------
+function project:open()
+{
+  clear_console
+
+  local PROJECT_NAME=$1
+  local PROJECT_DIR=${CONFIG[path.projects]}
+  local PROJECT_PATH=""
+
+  # If no project was passed as argument, list available choices from project directory.
+  if [ -z $PROJECT_NAME ]; then;
+    dir:choose PROJECT_PATH $PROJECT_DIR
+    PROJECT_NAME=$(basename $PROJECT_PATH)
+  else
+    PROJECT_PATH="${PROJECT_DIR}/${PROJECT_NAME}"
+  fi
+
+  # Open project in vscode.
+  code $PROJECT_PATH
+}
+
+# |----------------------------------------------------------------------------
 # | Delete a project.
 # |----------------------------------------------------------------------------
 # | @param [PROJECT_NAME] Name of the project to delete. (optional)
@@ -9,7 +34,6 @@ function project:delete()
 {
   clear_console && print:info "Deleting project..."
 
-  # Set defaults.
   local PROJECT_NAME=$1
   local PROJECT_DIR=${CONFIG[path.projects]}
   local PROJECT_PATH=""

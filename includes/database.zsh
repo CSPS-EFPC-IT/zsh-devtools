@@ -114,7 +114,6 @@ function db:drop()
 # | Create a database.
 # |----------------------------------------------------------------------------
 # | @param [DB_NAME] Name of the database to create. (optional)
-# | @param [MYSQL_LOGIN_PATH] Name of mysql login path to use. (optional)
 # |----------------------------------------------------------------------------
 function db:create()
 {
@@ -136,6 +135,26 @@ function db:create()
   else
     print:warning "Database $(print:highlight ${DB_NAME}) could not be created. Verify that it does not already exists."
   fi
+}
+
+# |----------------------------------------------------------------------------
+# | Drop database and recreate it.
+# |----------------------------------------------------------------------------
+# | @param [DB_NAME] Name of the database to recreate. (optional)
+# |----------------------------------------------------------------------------
+function db:recreate()
+{
+  local DB_NAME=$1
+
+  # When no database name is passed as argument, allow user to choose from list.
+  if [ -z $DB_NAME ]; then;
+    clear_console && print:info "Rereating database..."
+    db:choose DB_NAME && confirm "You are about to recreate the following database $(print:highlight $DB_NAME)."
+    if [[ $CONFIRM = "n" ]]; then; return; fi
+  fi
+
+  db:drop $DB_NAME
+  db:create $DB_NAME
 }
 
 # |----------------------------------------------------------------------------

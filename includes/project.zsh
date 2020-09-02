@@ -137,13 +137,14 @@ function project:create_laravel()
   local PROJECT_PATH=$PROJECT_DIR"/"$PROJECT_NAME
   local DEFAULT_VERSION=${CONFIG[laravel.version]}
   local ENV_FILE="$PROJECT_PATH/.env"
+  local DB_NAME=${PROJECT_NAME//-/_}
 
   # Ask for framework version to be used.
   read VERSION\?"> Framework version [ $DEFAULT_VERSION ]: "
   if [ -z "$VERSION" ]; then; VERSION=$DEFAULT_VERSION; fi
 
   # Use composer install method to create Laravel project.
-  composer create-project laravel/laravel="$VERSION.*" $PROJECT_PATH
+  composer create-project laravel/laravel="$VERSION" $PROJECT_PATH
 
   # Update .env file with values stored in config.
   print:line && print:info "Updating .env file..."
@@ -154,8 +155,6 @@ function project:create_laravel()
   sed -i "s/DB_USERNAME=root/DB_USERNAME=${CONFIG[db.user]}/g" $ENV_FILE
   sed -i "s/DB_PASSWORD=/DB_PASSWORD=${CONFIG[db.password]}/g" $ENV_FILE
 
-  # Create database using project name (replace "-" with "_").
-  DB_NAME=${PROJECT_NAME//-/_}
   db:create $DB_NAME
 }
 

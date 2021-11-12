@@ -122,6 +122,14 @@ function project:create()
     code $PROJECT_PATH
   fi
 
+  # Initialize Git if configured to do so.
+  if [[ $CONFIG[project.run_git_init] = true ]]; then;
+    cd $PROJECT_PATH
+    git init
+    git add .
+    git commit -m "Initial commit"
+  fi
+
   print:success "Project $(print:highlight ${PROJECT_NAME}) was successfully created."
 }
 

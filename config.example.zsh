@@ -53,6 +53,10 @@ CONFIG=(
   project.open_in_vscode
     true
 
+  # Initialize Git and commit files after being created.
+  project.run_git_init
+    true
+
   # Default version to download when creating a Laravel project.
   laravel.version
     "6.0"
